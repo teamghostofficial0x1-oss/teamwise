@@ -36,16 +36,15 @@ RUN echo "xfce4-session" > /etc/skel/.Xclients && \
     cp /etc/skel/.Xclients /root/.Xclients && \
     sed -i 's/3389/80/g' /etc/xrdp/xrdp.ini
 
-# ৬. ইউজারনেম ও পাসওয়ার্ড সেট করা
-# ইউজারনেম: dev এবং পাসওয়ার্ড: pass1234 (SSH এবং RDP দুটোর জন্যই এক)
-RUN useradd -rm -d /home/dev -s /bin/bash -g root -G sudo -u 1000 dev && \
-    echo 'rubel:rubel@@@@' | chpasswd && \
-    echo 'root:rubel@@@@' | chpasswd && \
-    cp /etc/skel/.Xclients /home/dev/.Xclients && \
-    chown -R dev:root /home/dev
+# ৬. ইউজারনেম ও পাসওয়ার্ড সেট করা (এখানে ইউজারনেম এবং পাসওয়ার্ড দুটোই rubel সেট করা হয়েছে)
+RUN useradd -rm -d /home/rubel -s /bin/bash -g root -G sudo -u 1000 rubel && \
+    echo "rubel:rubel@@@@" | chpasswd && \
+    echo "root:rubel@@@@" | chpasswd && \
+    cp /etc/skel/.Xclients /home/rubel/.Xclients && \
+    chown -R rubel:root /home/rubel
 
-# ৭. ওয়ার্কিং ডিরেক্টরি সেট করা
-WORKDIR /home/dev
+# 7. ওয়ার্কিং ডিরেক্টরি সেট করা
+WORKDIR /home/rubel
 COPY . .
 
 # ৮. Render-এর জন্য পোর্ট ৮০ এক্সপোজ করা
