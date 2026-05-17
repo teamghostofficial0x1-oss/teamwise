@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM BD CYBER NINJA OFFICIAL SPY AGENTS SITE UPGRADING START :-) – TEAM BD CYBER NINJA SPY AGENTS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #020108;
+            min-height: 100vh;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            overflow-x: hidden;
+            user-select: none;
+            position: relative;
+        }
+
+        /* ============ 404 GLITCH BACKGROUND ============ */
+        .glitch-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            pointer-events: none;
+            opacity: 0.25;
+            animation: bgFlicker 0.3s infinite alternate;
+        }
+
+        .glitch-text {
+            font-size: clamp(8rem, 20vw, 18rem);
+            font-weight: bold;
+            color: #ff0040;
+            position: relative;
+            letter-spacing: 10px;
+            text-shadow: 0 0 10px #ff0040, 0 0 30px #ff0040;
+            animation: glitch-skew 0.4s infinite alternate;
+        }
+
+        /* Duplicate layers for glitch effect */
+        .glitch-text::before,
+        .glitch-text::after {
+            content: '404';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #0ff;
+            opacity: 0.8;
+            animation: glitch-clip 0.8s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            color: #ff0;
+            animation: glitch-clip2 0.9s infinite linear alternate;
+        }
+
+        @keyframes glitch-clip {
+            0% { clip-path: inset(20% 0 60% 0); transform: translate(-8px, 2px); }
+            20% { clip-path: inset(45% 0 30% 0); transform: translate(8px, -5px); }
+            40% { clip-path: inset(10% 0 70% 0); transform: translate(-4px, 8px); }
+            60% { clip-path: inset(70% 0 10% 0); transform: translate(12px, -3px); }
+            80% { clip-path: inset(30% 0 50% 0); transform: translate(-10px, 1px); }
+            100% { clip-path: inset(55% 0 25% 0); transform: translate(5px, -8px); }
+        }
+
+        @keyframes glitch-clip2 {
+            0% { clip-path: inset(40% 0 50% 0); transform: translate(6px, -6px); }
+            20% { clip-path: inset(70% 0 10% 0); transform: translate(-7px, 7px); }
+            40% { clip-path: inset(15% 0 65% 0); transform: translate(11px, -2px); }
+            60% { clip-path: inset(60% 0 25% 0); transform: translate(-12px, 5px); }
+            80% { clip-path: inset(35% 0 55% 0); transform: translate(9px, -9px); }
+            100% { clip-path: inset(5% 0 80% 0); transform: translate(-3px, 3px); }
+        }
+
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg, 0deg); }
+            10% { transform: skew(2deg, 1deg); }
+            20% { transform: skew(-1deg, -1deg); }
+            30% { transform: skew(0deg, 0deg); }
+            40% { transform: skew(-2deg, 0deg); }
+            50% { transform: skew(0deg, 0deg); }
+            60% { transform: skew(1deg, -1deg); }
+            70% { transform: skew(0deg, 0deg); }
+            80% { transform: skew(-1deg, 2deg); }
+            90% { transform: skew(0deg, 0deg); }
+            100% { transform: skew(0.5deg, -0.5deg); }
+        }
+
+        @keyframes bgFlicker {
+            0% { opacity: 0.22; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.2; }
+        }
+
+        .sub-glitch {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #ff0040;
+            letter-spacing: 5px;
+            margin-top: -20px;
+            text-shadow: 0 0 15px #ff0040;
+            animation: subSkew 0.5s infinite alternate;
+        }
+
+        @keyframes subSkew {
+            0% { transform: skew(-1deg, 0deg); opacity: 0.9; }
+            100% { transform: skew(1deg, 1deg); opacity: 1; }
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 200, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 200, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Scanlines */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.15) 0px,
+                rgba(0,0,0,0.15) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Main content wrapper */
+        .page-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 95%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Header */
+        .site-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 0 10px rgba(0,255,200,0.5);
+        }
+
+        .header-left h1 .dollar {
+            color: #00ffc8;
+            text-shadow: 0 0 15px #00ffc8;
+        }
+
+        .header-left .subtitle {
+            color: #6ee7b7;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .header-right img {
+            max-height: 8rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            border: 1px solid rgba(22, 101, 52, 0.8);
+        }
+
+        /* Center Logo */
+        .logo-center-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        .logo-center-wrapper img {
+            max-width: 180px;
+            filter: drop-shadow(0 0 20px #0ff) drop-shadow(0 0 40px #f0f);
+            animation: logoFloat 3s ease-in-out infinite, logoGlitch 5s infinite step-end;
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes logoGlitch {
+            0%,100%{ filter: drop-shadow(0 0 20px #0ff) drop-shadow(0 0 40px #f0f); }
+            2%{ filter: drop-shadow(3px 0 10px #f00) drop-shadow(-2px 0 10px #0ff); }
+            4%{ filter: drop-shadow(0 0 20px #0ff) drop-shadow(0 0 40px #f0f); }
+            5%{ filter: drop-shadow(-2px 2px 10px #0f0) drop-shadow(2px -2px 10px #f0f); }
+        }
+
+        /* Terminal Card */
+        .terminal-container {
+            background: rgba(8, 8, 18, 0.85);
+            border: 1px solid rgba(0, 255, 200, 0.4);
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.2), 0 0 60px rgba(0, 200, 255, 0.1), inset 0 0 30px rgba(0,0,0,0.8);
+            border-radius: 12px;
+            padding: 25px 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: borderGlow 4s infinite alternate;
+        }
+        @keyframes borderGlow {
+            0%{ border-color: rgba(0,255,200,0.5); box-shadow: 0 0 30px rgba(0,255,200,0.25); }
+            50%{ border-color: rgba(180,0,255,0.6); box-shadow: 0 0 40px rgba(180,0,255,0.3); }
+            100%{ border-color: rgba(0,255,200,0.7); box-shadow: 0 0 35px rgba(0,255,200,0.35); }
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0,255,200,0.3);
+            padding-bottom: 15px;
+        }
+        .dot {
+            width: 14px; height: 14px; border-radius: 50%; margin-right: 10px; box-shadow: 0 0 15px currentColor;
+        }
+        .dot.red { background: #ff3b5c; color: #ff3b5c; }
+        .dot.yellow { background: #ffbd2e; color: #ffbd2e; }
+        .dot.green { background: #00e676; color: #00e676; }
+        .terminal-title {
+            margin-left: auto; color: #0ff; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 15px #0ff;
+        }
+
+        .typing-area {
+            color: #00ffc8; font-size: 1.3rem; line-height: 1.8; min-height: 110px; white-space: pre-wrap;
+            text-shadow: 0 0 15px #00ffc8; background: rgba(0,255,200,0.02); padding: 10px; border-radius: 4px; border-left: 3px solid #f0f;
+        }
+        .cursor {
+            display: inline-block; width: 3px; height: 1.4em; background: #f0f; vertical-align: middle; margin-left: 2px;
+            animation: blink 1s step-end infinite; box-shadow: 0 0 20px #f0f;
+        }
+        @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0; } }
+
+        .status-line {
+            margin-top: 20px; color: rgba(0,255,200,0.7); font-size: 0.85rem; letter-spacing: 2px; display: flex; align-items: center; gap: 15px;
+        }
+        .pulse-indicator {
+            width: 12px; height: 12px; background: #f0f; border-radius: 50%; box-shadow: 0 0 20px #f0f; animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%{ transform: scale(0.9); opacity:0.7; } 50%{ transform: scale(1.4); opacity:1; } 100%{ transform: scale(0.9); opacity:0.7; }
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .site-header { flex-direction: column; align-items: flex-start; }
+            .header-right img { max-height: 6rem; }
+            .logo-center-wrapper img { max-width: 130px; }
+            .glitch-text { font-size: 5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 404 GLITCH BACKGROUND LAYER -->
+    <div class="glitch-bg">
+        <div class="glitch-text">404</div>
+        <div class="sub-glitch">SITE UPGRADING // SERVER IN MORD (OFFICIAL)</div>
+    </div>
+
+    <div class="grid-overlay"></div>
+
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="header-left">
+                <h1>
+                    Welcome <span class="dollar">$</span>
+                    <span id="typing-heading">WHO WE ARE ?/span><span class="cursor"></span>
+                </h1>
+                <p class="subtitle">Team BD Cyber Ninja Official Spy Agents</p>
+            </div>
+            <div class="header-right">
+                <img src="banner.png" alt="Team BD Cyber Ninja Banner">
+            </div>
+        </header>
+
+        <div class="logo-center-wrapper">
+            <img src="logo.png" alt="Team Logo">
+        </div>
+
+        <div class="terminal-container" id="terminalContainer">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="terminal-title">💀 SHΔDØW SERVER UPGRADE 💀</span>
+            </div>
+            <div id="typingArea" class="typing-area"></div>
+            <div class="status-line">
+                <span class="pulse-indicator"></span>
+                <span>⚡ CONNECTION ENCRYPTED • BLACK HAT SPY AGENTS ACTIVE ⚡</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Heading typing
+            const headingEl = document.getElementById('typing-heading');
+            const headingText = 'WHO WE ARE?';
+            let idx = 0;
+            function typeHeading() {
+                if (idx <= headingText.length) {
+                    headingEl.textContent = headingText.substring(0, idx);
+                    idx++;
+                    setTimeout(typeHeading, 120);
+                }
+            }
+
+            // Terminal typing
+            const messageLines = [
+                "> INITIALIZING SHΔDØW PROTOCOL...",
+                "> ",
+                "> ⚡ TEAM BD CYBER NINJA SPY AGENTS ⚡",
+                "> ",
+                "> THIS WEBSITE HAS BEEN UPGRADED.",
+                "> MORD ACTIVE ADMINS ARE READY.",
+                "> PLEASE WAIT FOR IT...",
+                "> ",
+                "> [████████████████████] 100% DEPLOYED",
+                "> ",
+                "> ACCESS GRANTED — WELCOME TO THE SHΔDØW NET."
+            ];
+            const typingArea = document.getElementById('typingArea');
+            let line = 0, ch = 0, full = '';
+
+            function typeTerminal() {
+                if (line >= messageLines.length) return;
+                const curLine = messageLines[line];
+                if (ch < curLine.length) {
+                    full += curLine.charAt(ch);
+                    typingArea.innerHTML = full + '<span class="cursor"></span>';
+                    ch++;
+                    setTimeout(typeTerminal, 45);
+                } else {
+                    if (line < messageLines.length - 1) full += '\n';
+                    line++;
+                    ch = 0;
+                    setTimeout(typeTerminal, 350);
+                }
+            }
+
+            window.addEventListener('load', () => {
+                typeHeading();
+                setTimeout(typeTerminal, 600);
+            });
+
+            // Terminal micro-glitch
+            setInterval(() => {
+                const cont = document.getElementById('terminalContainer');
+                if (cont) {
+                    cont.style.transform = `skew(${Math.random()*0.6-0.3}deg)`;
+                    setTimeout(() => cont.style.transform = '', 100);
+                }
+            }, 2500);
+
+            // Cursor color cycling
+            setInterval(() => {
+                document.querySelectorAll('.cursor').forEach(c => {
+                    const cols = ['#0ff','#f0f','#ff0','#0f0'];
+                    const col = cols[Math.floor(Math.random()*cols.length)];
+                    c.style.background = col;
+                    c.style.boxShadow = `0 0 20px ${col}`;
+                });
+            }, 800);
+        })();
+    </script>
+</body>
+</html>
