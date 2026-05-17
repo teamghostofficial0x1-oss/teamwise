@@ -1,10 +1,10 @@
-# ১. বেস ইমেজ হিসেবে উবুন্টু ব্যবহার করা হচ্ছে
+# ১. উবুন্টু বেস ইমেজ ব্যবহার
 FROM ubuntu:22.04
 
-# ইন্টারনাল প্রম্পট বন্ধ করার জন্য
+# ইন্টারনাল প্রম্পট বন্ধ করা
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ২. প্রয়োজনীয় সিস্টেম প্যাকেজ, Apache, PHP এবং SSH-এর জন্য curl/ca-certificates ইনস্টল করা
+# ২. প্রয়োজনীয় প্যাকেজ এবং Apache + PHP + Python ইনস্টল করা
 RUN apt-get update && apt-get install -y \
     curl \
     git \
@@ -15,21 +15,25 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
-    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# ৩. Node.js (Version 20) ইনস্টল করা
+# ৩. Node.js ইনস্টল করা
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# ৪. কাজের সুবিধার্থে ওয়ার্কিং ডিরেক্টরি সেট করা
+# ৪. অ্যাপাচির ওয়ার্কিং ডিরেক্টরি সেট করা
 WORKDIR /var/www/html
 
-# ৫. আপনার প্রোজেক্টের সব ফাইল ডকার কন্টেইনারে কপি করা
+# 🔴 ৫. অ্যাপাচির তৈরি করা ডিফল্ট index.html ফাইলটি পার্মানেন্টলি ডিলিট করা
+# এর ফলে অ্যাপাচির ডিফল্ট পেজ আর কখনোই আপনার সামনে আসবে না
+RUN rm -f index.html
+
+# 🔴 ৬. আপনার GitHub রুট রেপোর সব ফাইল সরাসরি এখানে কপি করা
+# আপনি রেপোতে যা রাখবেন হুবহু সেটাই এখানে আসবে, যা ডিলিট করবেন তাও এখান থেকে হাওয়া হয়ে যাবে
 COPY . .
 
-# ৬. Apache-এর ডিফল্ট পোর্ট ৮০ ওপেন করা
+# 7. পোর্ট এক্সপোজ করা
 EXPOSE 80
 
-# ৭. সার্ভার চালু করার কমান্ড (Apache ব্যাকগ্রাউন্ডে চলবে)
+# ৮. সার্ভার চালু করার কমান্ড
 CMD ["apachectl", "-D", "FOREGROUND"]
