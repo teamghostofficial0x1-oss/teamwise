@@ -4,7 +4,7 @@ FROM ubuntu:22.04
 # ইন্টারনাল প্রম্পট বন্ধ করার জন্য
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ২. প্রয়োজনীয় প্যাকেজ, Apache, PHP, Python ইনস্টল করা
+# ২. প্রয়োজনীয় সিস্টেম প্যাকেজ, Apache, PHP এবং SSH-এর জন্য curl/ca-certificates ইনস্টল করা
 RUN apt-get update && apt-get install -y \
     curl \
     git \
@@ -15,24 +15,21 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # ৩. Node.js (Version 20) ইনস্টল করা
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# ৪. অ্যাপাচি কনফিগারেশন (পোর্ট ৮০ ডিফল্ট থাকে)
+# ৪. কাজের সুবিধার্থে ওয়ার্কিং ডিরেক্টরি সেট করা
 WORKDIR /var/www/html
 
-# ৫. আপনার প্রোজেক্টের সব ফাইল (যেমন index.php বা index.html) কপি করা
+# ৫. আপনার প্রোজেক্টের সব ফাইল ডকার কন্টেইনারে কপি করা
 COPY . .
 
-# 🔴 অত্যন্ত গুরুত্বপূর্ণ: যদি আপনার রেপোজিটরিতে কোনো index.php বা index.html না থাকে, 
-# তবে টেস্ট করার জন্য একটি ডিফল্ট index.php তৈরি করে নেওয়া হচ্ছে।
-RUN echo "<?php echo '<h1>Server is running successfully with PHP, Node.js, Python!</h1>'; ?>" > /var/www/html/index.php
-
-# ৬. পোর্ট ৮০ এক্সপোজ করা
+# ৬. Apache-এর ডিফল্ট পোর্ট ৮০ ওপেন করা
 EXPOSE 80
 
-# ৭. Apache সার্ভার চালু করার ফাইনাল কমান্ড
+# ৭. সার্ভার চালু করার কমান্ড (Apache ব্যাকগ্রাউন্ডে চলবে)
 CMD ["apachectl", "-D", "FOREGROUND"]
