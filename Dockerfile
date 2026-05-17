@@ -4,57 +4,35 @@ FROM ubuntu:22.04
 # ইন্টারনাল প্রম্পট বন্ধ করার জন্য
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ২. প্রয়োজনীয় প্যাকেজ, PHP, Python, OpenSSH Server এবং xrdp + GUI ইনস্টল করা
+# ২. প্রয়োজনীয় প্যাকেজ, Apache, PHP, Python ইনস্টল করা
 RUN apt-get update && apt-get install -y \
     curl \
     git \
     software-properties-common \
+    apache2 \
     php \
+    libapache2-mod-php \
     python3 \
     python3-pip \
     python3-venv \
-    openssh-server \
-    sudo \
-    xrdp \
-    xfce4 \
-    xfce4-goodies \
     && rm -rf /var/lib/apt/lists/*
 
 # ৩. Node.js (Version 20) ইনস্টল করা
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# ৪. SSH কনফিগারেশন (পোর্ট ২২ থেকে ৮০-তে পরিবর্তন এবং পাসওয়ার্ড অথেনটিকেশন অন)
-RUN mkdir /var/run/sshd && \
-    sed -i 's/#Port 22/Port 80/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# ৪. অ্যাপাচি কনফিগারেশন (পোর্ট ৮০ ডিফল্ট থাকে)
+WORKDIR /var/www/html
 
-# ৫. xrdp কনফিগারেশন করা (যাতে xfce ডেস্কটপ এনভায়রনমেন্ট লোড হয়)
-RUN echo "xfce4-session" > /etc/skel/.Xclients && \
-    cp /etc/skel/.Xclients /root/.Xclients && \
-    sed -i 's/3389/80/g' /etc/xrdp/xrdp.ini
-
-# ৬. ইউজারনেম ও পাসওয়ার্ড সেট করা (এখানে ইউজারনেম এবং পাসওয়ার্ড দুটোই rubel সেট করা হয়েছে)
-RUN useradd -rm -d /home/rubel -s /bin/bash -g root -G sudo -u 1000 rubel && \
-    echo "rubel:rubel@@@@" | chpasswd && \
-    echo "root:rubel@@@@" | chpasswd && \
-    cp /etc/skel/.Xclients /home/rubel/.Xclients && \
-    chown -R rubel:root /home/rubel
-
-# 7. ওয়ার্কিং ডিরেক্টরি সেট করা
-WORKDIR /home/rubel
+# ৫. আপনার প্রোজেক্টের সব ফাইল (যেমন index.php বা index.html) কপি করা
 COPY . .
 
-# ৮. Render-এর জন্য পোর্ট ৮০ এক্সপোজ করা
+# 🔴 অত্যন্ত গুরুত্বপূর্ণ: যদি আপনার রেপোজিটরিতে কোনো index.php বা index.html না থাকে, 
+# তবে টেস্ট করার জন্য একটি ডিফল্ট index.php তৈরি করে নেওয়া হচ্ছে।
+RUN echo "<?php echo '<h1>Server is running successfully with PHP, Node.js, Python!</h1>'; ?>" > /var/www/html/index.php
+
+# ৬. পোর্ট ৮০ এক্সপোজ করা
 EXPOSE 80
 
-# ৯. একটি স্টার্টআপ স্ক্রিপ্ট তৈরি করা যাতে SSH এবং xrdp একসাথে ব্যাকগ্রাউন্ডে চলে
-RUN echo '#!/bin/bash\n\
-service ssh start\n\
-service xrdp start\n\
-tail -f /dev/null' > /start.sh && chmod +x /start.sh
-
-# ফাইনাল কমান্ড রান করা
-CMD ["/start.sh"]
+# ৭. Apache সার্ভার চালু করার ফাইনাল কমান্ড
+CMD ["apachectl", "-D", "FOREGROUND"]
